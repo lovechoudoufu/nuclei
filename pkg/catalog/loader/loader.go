@@ -15,6 +15,7 @@ import (
 	"github.com/projectdiscovery/nuclei/v3/pkg/catalog"
 	"github.com/projectdiscovery/nuclei/v3/pkg/catalog/config"
 	"github.com/projectdiscovery/nuclei/v3/pkg/catalog/loader/filter"
+	"github.com/projectdiscovery/nuclei/v3/pkg/keys"
 	"github.com/projectdiscovery/nuclei/v3/pkg/model/types/severity"
 	"github.com/projectdiscovery/nuclei/v3/pkg/protocols"
 	"github.com/projectdiscovery/nuclei/v3/pkg/templates"
@@ -32,6 +33,7 @@ import (
 const (
 	httpPrefix  = "http://"
 	httpsPrefix = "https://"
+	AuthStoreId = "auth_store"
 )
 
 var (
@@ -40,6 +42,7 @@ var (
 
 // Config contains the configuration options for the loader
 type Config struct {
+	StoreId                  string // used to set store id (optional)
 	Templates                []string
 	TemplateURLs             []string
 	Workflows                []string
@@ -66,6 +69,7 @@ type Config struct {
 
 // Store is a storage for loaded nuclei templates
 type Store struct {
+	id             string // id of the store (optional)
 	tagFilter      *templates.TagFilter
 	pathFilter     *filter.PathFilter
 	config         *Config
@@ -131,6 +135,7 @@ func New(cfg *Config) (*Store, error) {
 
 	// Create a tag filter based on provided configuration
 	store := &Store{
+		id:        cfg.StoreId,
 		config:    cfg,
 		tagFilter: tagFilter,
 		pathFilter: filter.NewPathFilter(&filter.PathFilterConfig{
@@ -227,6 +232,10 @@ func (store *Store) ReadTemplateFromURI(uri string, remote bool) ([]byte, error)
 	} else {
 		return os.ReadFile(uri)
 	}
+}
+
+func (store *Store) ID() string {
+	return store.id
 }
 
 // Templates returns all the templates in the store
@@ -344,6 +353,20 @@ func (store *Store) areWorkflowOrTemplatesValid(filteredTemplatePaths map[string
 			if isParsingError("Error occurred parsing template %s: %s\n", templatePath, err) {
 				areTemplatesValid = false
 			}
+		} else if template == nil {
+			// NOTE(dwisiswant0): possibly global matchers template.
+			// This could definitely be handled better, for example by returning an
+			// `ErrGlobalMatchersTemplate` during `templates.Parse` and checking it
+			// with `errors.Is`.
+			//
+			// However, I’m not sure if every reference to it should be handled
+			// that way. Returning a `templates.Template` pointer would mean it’s
+			// an active template (sending requests), and adding a specific field
+			// like `isGlobalMatchers` in `templates.Template` (then checking it
+			// with a `*templates.Template.IsGlobalMatchersEnabled` method) would
+			// just introduce more unknown issues - like during template
+			// clustering, AFAIK.
+			continue
 		} else {
 			if existingTemplatePath, found := templateIDPathMap[template.ID]; !found {
 				templateIDPathMap[template.ID] = templatePath
@@ -434,7 +457,7 @@ func (store *Store) LoadTemplatesWithTags(templatesList, tags []string) []*templ
 		// increment signed/unsigned counters
 		if tmpl.Verified {
 			if tmpl.TemplateVerifier == "" {
-				templates.SignatureStats[templates.PDVerifier].Add(1)
+				templates.SignatureStats[keys.PDVerifier].Add(1)
 			} else {
 				templates.SignatureStats[tmpl.TemplateVerifier].Add(1)
 			}
@@ -471,7 +494,8 @@ func (store *Store) LoadTemplatesWithTags(templatesList, tags []string) []*templ
 						return
 					}
 					// DAST only templates
-					if store.config.ExecutorOptions.Options.DAST {
+					// Skip DAST filter when loading auth templates
+					if store.ID() != AuthStoreId && store.config.ExecutorOptions.Options.DAST {
 						// check if the template is a DAST template
 						if parsed.IsFuzzing() {
 							loadTemplate(parsed)
