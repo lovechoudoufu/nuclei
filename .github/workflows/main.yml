@@ -25,7 +25,7 @@ jobs:
         with:
           target_repo_token: ${{ secrets.GITHUB_TOKEN }}
           upstream_sync_repo: projectdiscovery/nuclei
-          upstream_sync_branch: master  # 原仓库的分支名
+          upstream_sync_branch: dev  # 原仓库的分支名
           target_sync_branch: master  # 您的 fork 的分支名
           test_mode: false
 
