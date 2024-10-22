@@ -21,11 +21,11 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/projectdiscovery/clistats v0.1.1
 	github.com/projectdiscovery/fastdialer v0.2.9
-	github.com/projectdiscovery/hmap v0.0.59
+	github.com/projectdiscovery/hmap v0.0.62
 	github.com/projectdiscovery/interactsh v1.2.0
-	github.com/projectdiscovery/rawhttp v0.1.67
-	github.com/projectdiscovery/retryabledns v1.0.77
-	github.com/projectdiscovery/retryablehttp-go v1.0.78
+	github.com/projectdiscovery/rawhttp v0.1.70
+	github.com/projectdiscovery/retryabledns v1.0.80
+	github.com/projectdiscovery/retryablehttp-go v1.0.82
 	github.com/projectdiscovery/yamldoc-go v1.0.4
 	github.com/remeh/sizedwaitgroup v1.0.0
 	github.com/rs/xid v1.5.0
@@ -81,24 +81,24 @@ require (
 	github.com/microsoft/go-mssqldb v1.6.0
 	github.com/ory/dockertest/v3 v3.10.0
 	github.com/praetorian-inc/fingerprintx v1.1.9
-	github.com/projectdiscovery/dsl v0.2.1
+	github.com/projectdiscovery/dsl v0.3.0
 	github.com/projectdiscovery/fasttemplate v0.0.2
 	github.com/projectdiscovery/go-smb2 v0.0.0-20240129202741-052cc450c6cb
 	github.com/projectdiscovery/goflags v0.1.64
-	github.com/projectdiscovery/gologger v1.1.24
+	github.com/projectdiscovery/gologger v1.1.28
 	github.com/projectdiscovery/gostruct v0.0.2
 	github.com/projectdiscovery/gozero v0.0.2
-	github.com/projectdiscovery/httpx v1.6.8
+	github.com/projectdiscovery/httpx v1.6.9
 	github.com/projectdiscovery/mapcidr v1.1.34
 	github.com/projectdiscovery/n3iwf v0.0.0-20230523120440-b8cd232ff1f5
-	github.com/projectdiscovery/ratelimit v0.0.56
+	github.com/projectdiscovery/ratelimit v0.0.60
 	github.com/projectdiscovery/rdap v0.9.1-0.20221108103045-9865884d1917
 	github.com/projectdiscovery/sarif v0.0.1
 	github.com/projectdiscovery/tlsx v1.1.7
 	github.com/projectdiscovery/uncover v1.0.9
 	github.com/projectdiscovery/useragent v0.0.71
-	github.com/projectdiscovery/utils v0.2.11
-	github.com/projectdiscovery/wappalyzergo v0.1.18
+	github.com/projectdiscovery/utils v0.2.15
+	github.com/projectdiscovery/wappalyzergo v0.1.22
 	github.com/redis/go-redis/v9 v9.1.0
 	github.com/seh-msft/burpxml v1.0.1
 	github.com/shurcooL/graphql v0.0.0-20230722043721-ed46e5a46466
@@ -210,7 +210,7 @@ require (
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c // indirect
 	github.com/projectdiscovery/asnmap v1.1.1 // indirect
 	github.com/projectdiscovery/cdncheck v1.1.0 // indirect
-	github.com/projectdiscovery/freeport v0.0.6 // indirect
+	github.com/projectdiscovery/freeport v0.0.7 // indirect
 	github.com/projectdiscovery/ldapserver v1.0.2-0.20240219154113-dcc758ebc0cb // indirect
 	github.com/projectdiscovery/machineid v0.0.0-20240226150047-2e2c51e35983 // indirect
 	github.com/refraction-networking/utls v1.6.7 // indirect
