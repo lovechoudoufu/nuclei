@@ -21,11 +21,11 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/projectdiscovery/clistats v0.1.1
 	github.com/projectdiscovery/fastdialer v0.2.9
-	github.com/projectdiscovery/hmap v0.0.62
+	github.com/projectdiscovery/hmap v0.0.63
 	github.com/projectdiscovery/interactsh v1.2.0
-	github.com/projectdiscovery/rawhttp v0.1.70
-	github.com/projectdiscovery/retryabledns v1.0.80
-	github.com/projectdiscovery/retryablehttp-go v1.0.82
+	github.com/projectdiscovery/rawhttp v0.1.71
+	github.com/projectdiscovery/retryabledns v1.0.81
+	github.com/projectdiscovery/retryablehttp-go v1.0.83
 	github.com/projectdiscovery/yamldoc-go v1.0.4
 	github.com/remeh/sizedwaitgroup v1.0.0
 	github.com/rs/xid v1.5.0
@@ -91,14 +91,14 @@ require (
 	github.com/projectdiscovery/httpx v1.6.9
 	github.com/projectdiscovery/mapcidr v1.1.34
 	github.com/projectdiscovery/n3iwf v0.0.0-20230523120440-b8cd232ff1f5
-	github.com/projectdiscovery/ratelimit v0.0.60
+	github.com/projectdiscovery/ratelimit v0.0.61
 	github.com/projectdiscovery/rdap v0.9.1-0.20221108103045-9865884d1917
 	github.com/projectdiscovery/sarif v0.0.1
 	github.com/projectdiscovery/tlsx v1.1.7
 	github.com/projectdiscovery/uncover v1.0.9
 	github.com/projectdiscovery/useragent v0.0.71
-	github.com/projectdiscovery/utils v0.2.15
-	github.com/projectdiscovery/wappalyzergo v0.1.22
+	github.com/projectdiscovery/utils v0.2.16
+	github.com/projectdiscovery/wappalyzergo v0.1.25
 	github.com/redis/go-redis/v9 v9.1.0
 	github.com/seh-msft/burpxml v1.0.1
 	github.com/shurcooL/graphql v0.0.0-20230722043721-ed46e5a46466
