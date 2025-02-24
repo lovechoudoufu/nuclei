@@ -171,6 +171,11 @@ func ValidateOptions(options *types.Options) error {
 	if options.Validate {
 		validateTemplatePaths(config.DefaultConfig.TemplatesDirectory, options.Templates, options.Workflows)
 	}
+	if options.DAST {
+		if err := validateDASTOptions(options); err != nil {
+			return err
+		}
+	}
 
 	// Verify if any of the client certificate options were set since it requires all three to work properly
 	if options.HasClientCertificates() {
@@ -274,6 +279,14 @@ func validateMissingGitLabOptions(options *types.Options) []string {
 	return missing
 }
 
+func validateDASTOptions(options *types.Options) error {
+	// Ensure the DAST server token meets minimum length requirement
+	if len(options.DASTServerToken) > 0 && len(options.DASTServerToken) < 16 {
+		return fmt.Errorf("DAST server token must be at least 16 characters long")
+	}
+	return nil
+}
+
 func createReportingOptions(options *types.Options) (*reporting.Options, error) {
 	var reportingOptions = &reporting.Options{}
 	if options.ReportingConfig != "" {
@@ -304,10 +317,17 @@ func createReportingOptions(options *types.Options) (*reporting.Options, error) 
 			OmitRaw: options.OmitRawRequests,
 		}
 	}
+	// Combine options.
 	if options.JSONLExport != "" {
-		reportingOptions.JSONLExporter = &jsonl.Options{
-			File:    options.JSONLExport,
-			OmitRaw: options.OmitRawRequests,
+		// Combine the CLI options with the config file options with the CLI options taking precedence
+		if reportingOptions.JSONLExporter != nil {
+			reportingOptions.JSONLExporter.File = options.JSONLExport
+			reportingOptions.JSONLExporter.OmitRaw = options.OmitRawRequests
+		} else {
+			reportingOptions.JSONLExporter = &jsonl.Options{
+				File:    options.JSONLExport,
+				OmitRaw: options.OmitRawRequests,
+			}
 		}
 	}
 
