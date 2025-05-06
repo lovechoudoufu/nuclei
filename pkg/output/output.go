@@ -279,6 +279,11 @@ func NewStandardWriter(options *types.Options) (*StandardWriter, error) {
 		omitTemplate:     options.OmitTemplate,
 		KeysToRedact:     options.Redact,
 	}
+
+	if v := os.Getenv("DISABLE_STDOUT"); v == "true" || v == "1" {
+		writer.DisableStdout = true
+	}
+
 	return writer, nil
 }
 
@@ -325,7 +330,7 @@ func (w *StandardWriter) Write(event *ResultEvent) error {
 			data = decolorizerRegex.ReplaceAll(data, []byte(""))
 		}
 		if _, writeErr := w.outputFile.Write(data); writeErr != nil {
-			return errors.Wrap(err, "could not write to output")
+			return errors.Wrap(writeErr, "could not write to output")
 		}
 		if w.AddNewLinesOutputFile && w.json {
 			_, _ = w.outputFile.Write([]byte("\n"))
